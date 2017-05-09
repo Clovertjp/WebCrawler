@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.tjp.web.crawler.download.Download;
+import com.tjp.web.crawler.config.Config;
 import com.tjp.web.crawler.inter.HtmlInter;
 
 /**
@@ -15,32 +15,33 @@ import com.tjp.web.crawler.inter.HtmlInter;
  * @date 2017年2月9日
  */
 public class ZhiHuIndex implements HtmlInter {
-	
-	private Document htmlDoc=null;
-	private Element head=null;
-	private Element body=null;
-	private String title="";
-	private String url="";
-	
-	private String savePath = "E:/zhihu_image";
-	
+
+	private Document htmlDoc = null;
+	private Element head = null;
+	private Element body = null;
+	private String title = "";
+	private String url = "";
+
+	private String savePath = Config.IMAGE_PATH;
+
 	/**
 	 * 
 	 */
-	public ZhiHuIndex(Document htmlDoc,String url) {
+	public ZhiHuIndex(Document htmlDoc, String url) {
 		// TODO Auto-generated constructor stub
-		this.htmlDoc=htmlDoc;
-		this.url=url;
-		if(this.htmlDoc!=null)
-		{
-			head=this.htmlDoc.head();
-			body=this.htmlDoc.body();
-			title=this.htmlDoc.title();
+		this.htmlDoc = htmlDoc;
+		this.url = url;
+		if (this.htmlDoc != null) {
+			head = this.htmlDoc.head();
+			body = this.htmlDoc.body();
+			title = this.htmlDoc.title();
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.tjp.web.crawler.inter.HtmlInter#Head()
 	 */
 	public void Head() {
@@ -48,16 +49,22 @@ public class ZhiHuIndex implements HtmlInter {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.tjp.web.crawler.inter.HtmlInter#Body()
 	 */
 	public void Body() {
 		// TODO Auto-generated method stub
+		if(body==null)
+		{
+			return;
+		}
 		Elements divs = body.getElementsByClass("feed-item-inner");
 		for (Element div : divs) {
 			Elements as = div.getElementsByClass("feed-title");
 			for (Element a : as) {
-				Elements nodeA=a.select("a");
+				Elements nodeA = a.select("a");
 				if (nodeA == null || nodeA.size() <= 0) {
 					continue;
 				}
@@ -68,7 +75,6 @@ public class ZhiHuIndex implements HtmlInter {
 			Elements avatars = div.getElementsByClass("avatar");
 			for (Element ava : avatars) {
 				String url = ava.select("img").first().attr("src");
-				Download.getInstance().downloadService(url, savePath);
 			}
 
 			Elements imgs = div.getElementsByClass("zh-summary summary clearfix");
@@ -78,7 +84,6 @@ public class ZhiHuIndex implements HtmlInter {
 					continue;
 				}
 				String url = i.first().attr("data-original");
-				Download.getInstance().downloadService(url, savePath);
 			}
 
 			Elements content = div.getElementsByClass("post-content");
@@ -88,7 +93,6 @@ public class ZhiHuIndex implements HtmlInter {
 					continue;
 				}
 				String url = el.first().attr("data-original");
-				Download.getInstance().downloadService(url, savePath);
 			}
 		}
 	}

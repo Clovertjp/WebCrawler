@@ -8,9 +8,9 @@ package com.tjp.web.crawler.inter;
  * @date 2017年2月9日
  */
 public interface HtmlInter {
-	
+
 	void Head();
-	
+
 	void Body();
 
 }
