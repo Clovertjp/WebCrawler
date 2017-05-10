@@ -36,6 +36,12 @@ public class ScheduleManager {
 		
 		downScheduler=new ScheduledThreadPoolExecutor(Config.DOWN_POOL, 
 				new ThreadFactoryBuilder().setNameFormat("down-pool-%d").build());
+		
+		List<String> list=RedisUtil.getInstance().lRange(Config.REDIS_DOWN_URL_KEY, 0, 1);
+		if(list.isEmpty())
+		{
+			RedisUtil.getInstance().lPush(Config.REDIS_DOWN_URL_KEY, Config.URL_FIRST);
+		}
 	}
 	
 	public static ScheduleManager getInstance()

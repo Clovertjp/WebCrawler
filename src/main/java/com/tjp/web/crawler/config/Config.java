@@ -31,6 +31,7 @@ public final class Config {
 	public static String AUTHOR;
 	public static String AGENT;
 	public static String HTML_GET_PARAM;
+	public static String URL_FIRST;
 
 	public static void load(){
 		// redis
@@ -59,7 +60,8 @@ public final class Config {
 		COOKIE=PropertiesUtil.getInstance().getProperty("html.cookie");
 		AUTHOR=PropertiesUtil.getInstance().getProperty("html.authorization");
 		AGENT=PropertiesUtil.getInstance().getProperty("html.agent");
-		HTML_GET_PARAM=PropertiesUtil.getInstance().getProperty("html.get.param");;
+		HTML_GET_PARAM=PropertiesUtil.getInstance().getProperty("html.get.param");
+		URL_FIRST=PropertiesUtil.getInstance().getProperty("web.first.url");
 	}
 
 }
