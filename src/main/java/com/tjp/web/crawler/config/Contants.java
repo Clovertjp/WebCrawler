@@ -10,6 +10,7 @@ public class Contants {
 	public static final String KEY_USER_FOLLOW="002";
 	public static final String KEY_USER_QUESTION="003";
 	public static final String KEY_QUESTION="004";
+	public static final String KEY_QUESTION_JSON="005";
 	
 	public static final String REDIS_KEY_USER="user";
 	public static final String REDIS_KEY_QUESTION="question";

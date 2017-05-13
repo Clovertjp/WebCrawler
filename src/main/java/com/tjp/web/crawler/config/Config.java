@@ -1,5 +1,12 @@
 package com.tjp.web.crawler.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.tjp.web.crawler.util.PropertiesUtil;
 
 public final class Config {
@@ -30,8 +37,10 @@ public final class Config {
 	public static String COOKIE;
 	public static String AUTHOR;
 	public static String AGENT;
-	public static String HTML_GET_PARAM;
 	public static String URL_FIRST;
+	
+	public static List<String> URL_KEYS=new ArrayList<String>();
+	public static Map<String,String> URL_PARAM_MAP=new HashMap<String,String>();
 
 	public static void load(){
 		// redis
@@ -60,8 +69,25 @@ public final class Config {
 		COOKIE=PropertiesUtil.getInstance().getProperty("html.cookie");
 		AUTHOR=PropertiesUtil.getInstance().getProperty("html.authorization");
 		AGENT=PropertiesUtil.getInstance().getProperty("html.agent");
-		HTML_GET_PARAM=PropertiesUtil.getInstance().getProperty("html.get.param");
 		URL_FIRST=PropertiesUtil.getInstance().getProperty("web.first.url");
+		
+		String urlKeys=PropertiesUtil.getInstance().getProperty("html.get.url.key");
+		if(!Strings.isNullOrEmpty(urlKeys))
+		{
+			URL_KEYS=Splitter.on("|").splitToList(urlKeys);
+		}
+		
+		String urlParam=PropertiesUtil.getInstance().getProperty("html.get.param");
+		if(!Strings.isNullOrEmpty(urlParam))
+		{
+			List<String> params=Splitter.on("|").splitToList(urlKeys);
+			for(String param :params)
+			{
+				List<String> tmp=Splitter.on(";").splitToList(urlKeys);
+				URL_PARAM_MAP.put(tmp.get(0), tmp.get(1));
+			}
+		}
+		
 	}
 
 }

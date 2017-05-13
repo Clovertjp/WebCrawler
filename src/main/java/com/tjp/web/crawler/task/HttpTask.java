@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import com.tjp.web.crawler.manager.BloomFilterManager;
 import com.tjp.web.crawler.manager.ScheduleManager;
 import com.tjp.web.crawler.util.HttpUtil;
+import com.tjp.web.crawler.util.zhihu.ZhiHuHttpUtil;
 
 public class HttpTask implements Runnable {
 	private String key;
@@ -27,7 +28,7 @@ public class HttpTask implements Runnable {
 			{
 				return;
 			}
-			String html=HttpUtil.http(url, null, HttpUtil.RequestMethod.GET, new HashMap<String, String>());
+			String html=new ZhiHuHttpUtil().http(key,url, null, HttpUtil.RequestMethod.GET, new HashMap<String, String>());
 			Document htmlDoc=Jsoup.parse(html);
 			ScheduleManager.getInstance().getHtmlScheduler().execute(new HtmlTask(key, url, htmlDoc));
 		}finally

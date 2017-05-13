@@ -37,8 +37,8 @@ public class HttpUtil {
 		public static int GET = 2;
 	}
 
-	public static String http(String connUrl, Map<String, String> param, int requestMethod,
-			Map<String, String> cookieMap) {
+	public String http(String connUrl, Map<String, String> param, int requestMethod,
+			Map<String, String> cookieMap,String paramStr) {
 		StringBuilder sbLines = new StringBuilder("");
 		try {
 
@@ -50,20 +50,27 @@ public class HttpUtil {
 			}
 			
 
-			if(!Strings.isNullOrEmpty(Config.HTML_GET_PARAM))
+			if(!Strings.isNullOrEmpty(paramStr))
 			{
 				if(!Strings.isNullOrEmpty(value))
 				{
-					value=value+"&"+Config.HTML_GET_PARAM;
+					value=value+"&"+paramStr;
 				}else
 				{
-					value=Config.HTML_GET_PARAM;
+					value=paramStr;
 				}
 			}
 
 			if (requestMethod == RequestMethod.GET) {
 				if (!"".equals(value)) {
-					urlStr += "?" + value;
+					if(urlStr.contains("?"))
+					{
+						urlStr += "&" + value;
+					}else
+					{
+						urlStr += "?" + value;
+					}
+					
 				}
 				requestStr = GetMethodStr;
 			} else {
@@ -139,8 +146,8 @@ public class HttpUtil {
 		map.put("limit", "5");
 		map.put("offset", "0");
 		map.put("sort_by", "default");
-		String html = HttpUtil.http(url, null, HttpUtil.RequestMethod.GET, map);
-		System.out.println(html);
+//		String html = HttpUtil.http(url, null, HttpUtil.RequestMethod.GET, map);
+//		System.out.println(html);
 //		Document doc=Jsoup.parse(html);
 //		new ZhiHuQuestion(doc, url).Body();
 
