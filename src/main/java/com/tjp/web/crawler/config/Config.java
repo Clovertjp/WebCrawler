@@ -80,10 +80,10 @@ public final class Config {
 		String urlParam=PropertiesUtil.getInstance().getProperty("html.get.param");
 		if(!Strings.isNullOrEmpty(urlParam))
 		{
-			List<String> params=Splitter.on("|").splitToList(urlKeys);
+			List<String> params=Splitter.on("|").splitToList(urlParam);
 			for(String param :params)
 			{
-				List<String> tmp=Splitter.on(";").splitToList(urlKeys);
+				List<String> tmp=Splitter.on(";").splitToList(param);
 				URL_PARAM_MAP.put(tmp.get(0), tmp.get(1));
 			}
 		}

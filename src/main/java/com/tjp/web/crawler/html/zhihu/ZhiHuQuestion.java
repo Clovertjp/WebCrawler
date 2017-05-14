@@ -78,6 +78,11 @@ public class ZhiHuQuestion implements HtmlInter {
 		String[] urls=url.split("/");
 		String id=urls[urls.length-1];
 		question.setId(id);
+		
+		//插入json的url
+		String jsonUrl="https://"+Config.HOST+"/api/v4/questions/"+id+"/answers?offset=3&limit=20&sort_by=default";
+		RedisUtil.getInstance().lPush(Config.REDIS_URL_KEY, Contants.KEY_QUESTION_JSON+jsonUrl);
+		
 		Element questHead=questionHead.first();
 		String questTitle=questHead.getElementsByClass("QuestionHeader-title").first().text();
 		question.setQuestionInfo(questTitle);

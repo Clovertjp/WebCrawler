@@ -40,7 +40,7 @@ public class ScheduleManager {
 		List<String> list=RedisUtil.getInstance().lRange(Config.REDIS_DOWN_URL_KEY, 0, 1);
 		if(list.isEmpty())
 		{
-			RedisUtil.getInstance().lPush(Config.REDIS_DOWN_URL_KEY, Config.URL_FIRST);
+			RedisUtil.getInstance().lPush(Config.REDIS_URL_KEY, Config.URL_FIRST);
 		}
 	}
 	

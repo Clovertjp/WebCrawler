@@ -29,8 +29,7 @@ public class HttpTask implements Runnable {
 				return;
 			}
 			String html=new ZhiHuHttpUtil().http(key,url, null, HttpUtil.RequestMethod.GET, new HashMap<String, String>());
-			Document htmlDoc=Jsoup.parse(html);
-			ScheduleManager.getInstance().getHtmlScheduler().execute(new HtmlTask(key, url, htmlDoc));
+			ScheduleManager.getInstance().getHtmlScheduler().execute(new HtmlTask(key, url, html));
 		}finally
 		{
 			ScheduleManager.getInstance().desHttpCount();
